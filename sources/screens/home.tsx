@@ -1,27 +1,32 @@
 
-import React, { useEffect } from 'react'
-import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
-
-import messaging from '@react-native-firebase/messaging'
+import React, { useEffect, useContext } from 'react'
+import { Alert, SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
 
 import { StackScreenPropsType } from '@models/navigators'
 
-import { executeNotificationData } from '@references/functions/notification-actions'
 import { Sentence } from '@references/constants/sentence'
+import { AppContext } from '@references/contexts'
+import globalData from '@references/global-data'
 
 function Home({ navigation, route }: StackScreenPropsType<'Home'>) {
   useEffect(() => {
-    messaging().getInitialNotification()
-    .then(remoteMessage => {
-      if (remoteMessage) {
-        executeNotificationData(remoteMessage.data)
+    const unsubscribeFocusListener = navigation.addListener('focus', () => {
+      if (globalData.needToRefreshList == true) {
+        Alert.alert('Information', 'Need to refresh')
+
+        globalData.needToRefreshList = false
       }
     })
-  }, [])
+
+    return unsubscribeFocusListener
+  }, [navigation])
+
+  const context = useContext(AppContext)
 
   return (
     <SafeAreaView
       style={{
+        backgroundColor: context.backgroundColor,
         flex: 1
       }}
     >
@@ -34,7 +39,7 @@ function Home({ navigation, route }: StackScreenPropsType<'Home'>) {
       >
         <TouchableOpacity
           activeOpacity={0.8}
-          onPress = {() => navigation.navigate('PickImage')}
+          onPress = {() => navigation.navigate('AnotherScreen')}
           style={{
             backgroundColor: 'dodgerblue',
             borderRadius: 8,
@@ -59,7 +64,7 @@ function Home({ navigation, route }: StackScreenPropsType<'Home'>) {
               fontWeight: '500'
             }}
           >
-            Go To Pick Image Screen
+            Go To Another Screen
           </Text>
         </TouchableOpacity>
       </View>

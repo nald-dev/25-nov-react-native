@@ -3,7 +3,7 @@ import { StackNavigationProp } from '@react-navigation/stack'
 
 export type NavigatorParameters = {
   Home: undefined
-  PickImage: undefined
+  AnotherScreen: undefined
 }
 
 export type StackScreenPropsType<K extends keyof NavigatorParameters> = {

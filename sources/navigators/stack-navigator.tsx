@@ -5,7 +5,7 @@ import { createStackNavigator, TransitionPresets } from '@react-navigation/stack
 import { NavigatorParameters } from '@models/navigators'
 
 import Home from '@screens/home'
-import PickImage from '@screens/pick-image'
+import AnotherScreen from '@screens/another-screen'
 
 const Stack = createStackNavigator<NavigatorParameters>()
 
@@ -26,8 +26,8 @@ function StackNavigator() {
       />
 
       <Stack.Screen
-        name = "PickImage"
-        component = {PickImage}
+        name = "AnotherScreen"
+        component = {AnotherScreen}
         options = {{
           ...TransitionPresets.SlideFromRightIOS,
           headerBackTitleVisible: false,
